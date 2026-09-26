@@ -1,14 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-namespace ClinicaOdontologica.API
+
+namespace WebApplication1
 {
     public class Program
     {
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            var connectionString = builder.Configuration.GetConnectionString("ClinicaOdontologicaAPIContext") ?? throw new InvalidOperationException("Connection string 'ClinicaOdontologicaAPIContext' not found.");
-
-            builder.Services.AddDbContext<ClinicaOdontologicaAPIContext>(options => options.UseNpgsql(connectionString));
 
             // Add services to the container.
 
