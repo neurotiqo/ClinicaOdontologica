@@ -44,6 +44,7 @@ namespace ClinicaOdontologica.Modelos
         public string? Telefono { get; set; }
 
         // Relacionamiento
-        List<Paciente> Pacientes { get; set; } = new List<Paciente>();
+        List<HistorialMedico> HistorialesMedicos { get; set; } = new List<HistorialMedico>();
+        List<Cita> Citas { get; set; } = new List<Cita>();
     }
 }

@@ -48,6 +48,8 @@ namespace ClinicaOdontologica.Modelos
         public Consultorio? Consultorio { get; set; }
 
         // Relacionamiento
-        public List<Cita>  Citas { get; set; } = new List<Cita>();
+        public List<Receta> Recetas { get; set; } = new List<Receta>();
+        public List<Factura> Facturas { get; set; } = new List<Factura>();
+        public List<DetallesCita> DetallesCitas { get; set; } = new List<DetallesCita>();
     }
 }

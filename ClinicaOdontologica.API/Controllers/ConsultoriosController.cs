@@ -1,98 +1,102 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ClinicaOdontologica.API.Data;
 using ClinicaOdontologica.Modelos;
 
-[Route("api/[controller]")]
-[ApiController]
-public class ConsultoriosController : ControllerBase
+namespace ClinicaOdontologica.API.Controllers
 {
-    private readonly ClinicaOdontologicaAPIContext _context;
-    public ConsultoriosController(ClinicaOdontologicaAPIContext context)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ConsultoriosController : ControllerBase
     {
-        _context = context;
-    }
-
-    // GET: api/Consultorio
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<Consultorio>>> GetConsultorio()
-    {
-        return await _context.Consultorio.ToListAsync();
-    }
-
-    // GET: api/Consultorio/5
-    [HttpGet("{idconsultorio}")]
-    public async Task<ActionResult<Consultorio>> GetConsultorio(int idconsultorio)
-    {
-        var consultorio = await _context.Consultorio.FindAsync(idconsultorio);
-
-        if (consultorio == null)
+        private readonly ClinicaOdontologicaAPIContext _context;
+        public ConsultoriosController(ClinicaOdontologicaAPIContext context)
         {
-            return NotFound();
+            _context = context;
         }
 
-        return consultorio;
-    }
-
-    // PUT: api/Consultorio/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPut("{idconsultorio}")]
-    public async Task<IActionResult> PutConsultorio(int? idconsultorio, Consultorio consultorio)
-    {
-        if (idconsultorio != consultorio.IdConsultorio)
+        // GET: api/Consultorio
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Consultorio>>> GetConsultorio()
         {
-            return BadRequest();
+            return await _context.Consultorio.ToListAsync();
         }
 
-        _context.Entry(consultorio).State = EntityState.Modified;
+        // GET: api/Consultorio/5
+        [HttpGet("{idconsultorio}")]
+        public async Task<ActionResult<Consultorio>> GetConsultorio(int idconsultorio)
+        {
+            var consultorio = await _context.Consultorio.FindAsync(idconsultorio);
 
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!ConsultorioExists(idconsultorio))
+            if (consultorio == null)
             {
                 return NotFound();
             }
-            else
-            {
-                throw;
-            }
+
+            return consultorio;
         }
 
-        return NoContent();
-    }
-
-    // POST: api/Consultorio
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPost]
-    public async Task<ActionResult<Consultorio>> PostConsultorio(Consultorio consultorio)
-    {
-        _context.Consultorio.Add(consultorio);
-        await _context.SaveChangesAsync();
-
-        return CreatedAtAction("GetConsultorio", new { idconsultorio = consultorio.IdConsultorio }, consultorio);
-    }
-
-    // DELETE: api/Consultorio/5
-    [HttpDelete("{idconsultorio}")]
-    public async Task<IActionResult> DeleteConsultorio(int? idconsultorio)
-    {
-        var consultorio = await _context.Consultorio.FindAsync(idconsultorio);
-        if (consultorio == null)
+        // PUT: api/Consultorio/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{idconsultorio}")]
+        public async Task<IActionResult> PutConsultorio(int? idconsultorio, Consultorio consultorio)
         {
-            return NotFound();
+            if (idconsultorio != consultorio.IdConsultorio)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(consultorio).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ConsultorioExists(idconsultorio))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
-        _context.Consultorio.Remove(consultorio);
-        await _context.SaveChangesAsync();
+        // POST: api/Consultorio
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Consultorio>> PostConsultorio(Consultorio consultorio)
+        {
+            _context.Consultorio.Add(consultorio);
+            await _context.SaveChangesAsync();
 
-        return NoContent();
-    }
+            return CreatedAtAction("GetConsultorio", new { idconsultorio = consultorio.IdConsultorio }, consultorio);
+        }
 
-    private bool ConsultorioExists(int? idconsultorio)
-    {
-        return _context.Consultorio.Any(e => e.IdConsultorio == idconsultorio);
+        // DELETE: api/Consultorio/5
+        [HttpDelete("{idconsultorio}")]
+        public async Task<IActionResult> DeleteConsultorio(int? idconsultorio)
+        {
+            var consultorio = await _context.Consultorio.FindAsync(idconsultorio);
+            if (consultorio == null)
+            {
+                return NotFound();
+            }
+
+            _context.Consultorio.Remove(consultorio);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool ConsultorioExists(int? idconsultorio)
+        {
+            return _context.Consultorio.Any(e => e.IdConsultorio == idconsultorio);
+        }
     }
 }

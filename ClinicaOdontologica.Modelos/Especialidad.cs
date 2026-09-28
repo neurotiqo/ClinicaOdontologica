@@ -21,6 +21,6 @@ namespace ClinicaOdontologica.Modelos
         public string? Descripcion { get; set; }
 
         // Relacionamiento
-        public List<Especialidad> Especialidades { get; set; } = new List<Especialidad>();
+        public List<Odontologo> Odontologos { get; set; } = new List<Odontologo>();
     }
 }

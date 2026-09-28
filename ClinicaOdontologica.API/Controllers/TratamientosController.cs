@@ -1,98 +1,102 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ClinicaOdontologica.API.Data;
 using ClinicaOdontologica.Modelos;
 
-[Route("api/[controller]")]
-[ApiController]
-public class TratamientosController : ControllerBase
+namespace ClinicaOdontologica.API.Controllers
 {
-    private readonly ClinicaOdontologicaAPIContext _context;
-    public TratamientosController(ClinicaOdontologicaAPIContext context)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class TratamientosController : ControllerBase
     {
-        _context = context;
-    }
-
-    // GET: api/Tratamiento
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<Tratamiento>>> GetTratamiento()
-    {
-        return await _context.Tratamiento.ToListAsync();
-    }
-
-    // GET: api/Tratamiento/5
-    [HttpGet("{idtratamiento}")]
-    public async Task<ActionResult<Tratamiento>> GetTratamiento(int idtratamiento)
-    {
-        var tratamiento = await _context.Tratamiento.FindAsync(idtratamiento);
-
-        if (tratamiento == null)
+        private readonly ClinicaOdontologicaAPIContext _context;
+        public TratamientosController(ClinicaOdontologicaAPIContext context)
         {
-            return NotFound();
+            _context = context;
         }
 
-        return tratamiento;
-    }
-
-    // PUT: api/Tratamiento/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPut("{idtratamiento}")]
-    public async Task<IActionResult> PutTratamiento(int? idtratamiento, Tratamiento tratamiento)
-    {
-        if (idtratamiento != tratamiento.IdTratamiento)
+        // GET: api/Tratamiento
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Tratamiento>>> GetTratamiento()
         {
-            return BadRequest();
+            return await _context.Tratamiento.ToListAsync();
         }
 
-        _context.Entry(tratamiento).State = EntityState.Modified;
+        // GET: api/Tratamiento/5
+        [HttpGet("{idtratamiento}")]
+        public async Task<ActionResult<Tratamiento>> GetTratamiento(int idtratamiento)
+        {
+            var tratamiento = await _context.Tratamiento.FindAsync(idtratamiento);
 
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!TratamientoExists(idtratamiento))
+            if (tratamiento == null)
             {
                 return NotFound();
             }
-            else
-            {
-                throw;
-            }
+
+            return tratamiento;
         }
 
-        return NoContent();
-    }
-
-    // POST: api/Tratamiento
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPost]
-    public async Task<ActionResult<Tratamiento>> PostTratamiento(Tratamiento tratamiento)
-    {
-        _context.Tratamiento.Add(tratamiento);
-        await _context.SaveChangesAsync();
-
-        return CreatedAtAction("GetTratamiento", new { idtratamiento = tratamiento.IdTratamiento }, tratamiento);
-    }
-
-    // DELETE: api/Tratamiento/5
-    [HttpDelete("{idtratamiento}")]
-    public async Task<IActionResult> DeleteTratamiento(int? idtratamiento)
-    {
-        var tratamiento = await _context.Tratamiento.FindAsync(idtratamiento);
-        if (tratamiento == null)
+        // PUT: api/Tratamiento/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{idtratamiento}")]
+        public async Task<IActionResult> PutTratamiento(int? idtratamiento, Tratamiento tratamiento)
         {
-            return NotFound();
+            if (idtratamiento != tratamiento.IdTratamiento)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(tratamiento).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TratamientoExists(idtratamiento))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
-        _context.Tratamiento.Remove(tratamiento);
-        await _context.SaveChangesAsync();
+        // POST: api/Tratamiento
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Tratamiento>> PostTratamiento(Tratamiento tratamiento)
+        {
+            _context.Tratamiento.Add(tratamiento);
+            await _context.SaveChangesAsync();
 
-        return NoContent();
-    }
+            return CreatedAtAction("GetTratamiento", new { idtratamiento = tratamiento.IdTratamiento }, tratamiento);
+        }
 
-    private bool TratamientoExists(int? idtratamiento)
-    {
-        return _context.Tratamiento.Any(e => e.IdTratamiento == idtratamiento);
+        // DELETE: api/Tratamiento/5
+        [HttpDelete("{idtratamiento}")]
+        public async Task<IActionResult> DeleteTratamiento(int? idtratamiento)
+        {
+            var tratamiento = await _context.Tratamiento.FindAsync(idtratamiento);
+            if (tratamiento == null)
+            {
+                return NotFound();
+            }
+
+            _context.Tratamiento.Remove(tratamiento);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool TratamientoExists(int? idtratamiento)
+        {
+            return _context.Tratamiento.Any(e => e.IdTratamiento == idtratamiento);
+        }
     }
 }

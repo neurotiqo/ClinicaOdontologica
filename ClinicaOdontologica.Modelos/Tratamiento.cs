@@ -29,6 +29,6 @@ namespace ClinicaOdontologica.Modelos
         public int DuracionEstimadaMinutos { get; set; }
 
         // Relacionamiento
-        List<Tratamiento> Tratamientos { get; set; } = new List<Tratamiento>();
+        List<DetallesCita> DetallesCitas { get; set; } = new List<DetallesCita>();
     }   
 }
